@@ -3,7 +3,7 @@ setwd("/Users/RHansel/Documents/AAAS_2013_2014/R_Stats/courserastuff/Exploratory
 rm(list=ls())
 
 #read file
-epc<-read.table("household_power_consumption.txt", header=TRUE, nrows= 2075259, sep=";")
+epc<-read.table("household_power_consumption.txt", header=TRUE, nrows= 2075259, sep=";", stringsAsFactors=FALSE)
 
 #get 2 days of info
 twodays<-epc[epc$Date=="1/2/2007" | epc$Date=="2/2/2007",]
@@ -11,6 +11,11 @@ twodays<-epc[epc$Date=="1/2/2007" | epc$Date=="2/2/2007",]
 #Can use this to write/read data to file (to speed things up)
 #write.csv(twodays, "twodays.csv")
 #twodays<-read.csv("twodays.csv", sep=",")
+
+#numeric conversion
+twodays$Sub_metering_1<-as.numeric(twodays$Sub_metering_1)
+twodays$Sub_metering_2<-as.numeric(twodays$Sub_metering_2)
+twodays$Sub_metering_3<-as.numeric(twodays$Sub_metering_3)
 
 #combine date and time
 timestamp<-paste(twodays$Date, twodays$Time)

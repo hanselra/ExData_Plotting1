@@ -1,25 +1,8 @@
 setwd("/Users/RHansel/Documents/AAAS_2013_2014/R_Stats/courserastuff/ExploratoryDataAnalysis/Project1/")
-
 rm(list=ls())
-library(ca)
-library(FactoMineR)
-library(missMDA)
-library(plyr)
-library(dplyr)
-library(rattle)
-library(caret)
-library(lattice) 
-library(stats) 
-library(ggplot2)
-library(car)
-library(reshape2)
-library(foreach) 
-library(methods)
-library(BradleyTerry2)
-library(sm)
 
 #read file
-epc<-read.table("household_power_consumption.txt", header=TRUE, nrows= 2075259, sep=";")
+epc<-read.table("household_power_consumption.txt", header=TRUE, nrows= 2075259, sep=";", stringsAsFactors=FALSE)
 
 #only get 2 days of information
 twodays<-epc[epc$Date=="1/2/2007" | epc$Date=="2/2/2007",]
@@ -27,6 +10,14 @@ twodays<-epc[epc$Date=="1/2/2007" | epc$Date=="2/2/2007",]
 #Can use this to write/read data to file (to speed things up)
 #write.csv(twodays, "twodays.csv")
 #twodays<-read.csv("twodays.csv", sep=",")
+
+#numeric conversion
+twodays$Global_active_power<- as.numeric(twodays$Global_active_power)
+twodays$Sub_metering_1<-as.numeric(twodays$Sub_metering_1)
+twodays$Sub_metering_2<-as.numeric(twodays$Sub_metering_2)
+twodays$Sub_metering_3<-as.numeric(twodays$Sub_metering_3)
+twodays$Voltage<-as.numeric(twodays$Voltage)
+twodays$Global_reactive_power<-as.numeric(twodays$Global_reactive_power)
 
 #combine date and time
 timestamp<-paste(twodays$Date, twodays$Time)
